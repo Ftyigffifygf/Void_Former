@@ -1,0 +1,61 @@
+# Tiny config — verifies architecture on CPU in seconds.
+name: voidformer-tiny
+
+model:
+  vocab_size: 256          # char-level by default
+  d_model: 128
+  d_void: 128
+  n_layers: 2
+  n_heads: 4
+  d_ff: 256
+  max_seq_len: 128
+  dropout: 0.1
+  void_noise_std: 0.05
+  coupling_init: 0.1
+  use_uncertainty_memory: true
+  use_dynamic_router: true
+  use_geodesic_tracker: true
+  geodesic_rank: 16
+  use_superposition_thinking: true
+  thinking_steps: 4
+  use_quantum_moe: true
+  num_experts: 4
+  top_k_experts: 2
+  use_quantum_token_embedder: true
+  collapse_temperature_init: 1.0
+  mode: adaptive-collapse  # deterministic | probabilistic | interference-heavy | adaptive-collapse | latent-memory
+
+tokenizer:
+  type: char              # char | bpe
+  bpe_vocab_size: 8000
+
+dataset:
+  type: toy               # toy | wikitext | pubmed | arxiv
+  hf_name: null
+  block_size: 64
+  batch_size: 4
+
+training:
+  lr: 3.0e-4
+  weight_decay: 0.01
+  warmup_steps: 50
+  total_steps: 200
+  grad_clip: 1.0
+  log_every: 10
+  ckpt_every: 200
+  device: auto            # auto | cpu | cuda
+  seed: 1234
+  amp: false
+
+losses:
+  lambda_entropy_preservation: 0.05
+  lambda_semantic_consistency: 0.10
+  lambda_collapse_reg: 0.02
+  lambda_interference_stability: 0.01
+  lambda_ambiguity_retention: 0.05
+  lambda_geodesic: 0.02
+  geodesic_target: 1.0
+
+experiment:
+  output_dir: experiments/tiny
+  tensorboard: true

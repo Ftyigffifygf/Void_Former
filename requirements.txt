@@ -1,0 +1,10 @@
+torch>=2.0.0
+qiskit>=1.1.0
+qiskit-aer>=0.14.0
+pyyaml>=6.0
+pytest>=8.0
+datasets>=2.0.0
+tensorboard>=2.10.0
+fastapi>=0.100.0
+uvicorn>=0.20.0
+numpy>=1.24.0

@@ -1,0 +1,60 @@
+name: voidformer-base
+
+model:
+  vocab_size: 50257
+  d_model: 512
+  d_void: 512
+  n_layers: 8
+  n_heads: 8
+  d_ff: 2048
+  max_seq_len: 1024
+  dropout: 0.1
+  void_noise_std: 0.07
+  coupling_init: 0.15
+  use_uncertainty_memory: true
+  use_dynamic_router: true
+  use_geodesic_tracker: true
+  geodesic_rank: 32
+  use_superposition_thinking: true
+  thinking_steps: 4
+  use_quantum_moe: true
+  num_experts: 4
+  top_k_experts: 2
+  use_quantum_token_embedder: true
+  collapse_temperature_init: 1.0
+  mode: adaptive-collapse
+
+tokenizer:
+  type: bpe
+  bpe_vocab_size: 50257
+
+dataset:
+  type: wikitext
+  hf_name: wikitext-103-raw-v1
+  block_size: 512
+  batch_size: 16
+
+training:
+  lr: 2.0e-4
+  weight_decay: 0.01
+  warmup_steps: 2000
+  total_steps: 100000
+  grad_clip: 1.0
+  log_every: 100
+  ckpt_every: 5000
+  device: auto
+  seed: 1234
+  amp: true
+
+losses:
+  lambda_entropy_preservation: 0.05
+  lambda_semantic_consistency: 0.10
+  lambda_collapse_reg: 0.02
+  lambda_interference_stability: 0.01
+  lambda_ambiguity_retention: 0.05
+  lambda_geodesic: 0.02
+  geodesic_target: 2.0
+
+experiment:
+  output_dir: experiments/base
+  tensorboard: true

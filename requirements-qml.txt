@@ -1,0 +1,4 @@
+-r requirements-ibm.txt
+pennylane>=0.35.0
+pennylane-qiskit>=0.35.0
+scikit-learn>=1.2.0

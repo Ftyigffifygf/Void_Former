@@ -1,0 +1,11 @@
+{
+  "provider_name": "voidformer_serve_provider",
+  "provider_type": "openai_compatible",
+  "api_base": "http://127.0.0.1:8000/v1",
+  "api_key": "voidformer_local_key",
+  "default_model": "quantum-voidformer",
+  "models": [
+    "quantum-voidformer",
+    "classical-voidformer"
+  ]
+}

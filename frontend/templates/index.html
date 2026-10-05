@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unified Field Theory Virtual Machine</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🌌 Unified Field Theory Virtual Machine</h1>
+            <p>A Grand Unification of All Computational Paradigms</p>
+        </header>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Left Panel: Program Editor -->
+            <div class="panel program-panel">
+                <h2>📝 Program Editor</h2>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="visual">Visual</button>
+                    <button class="tab-btn" data-tab="code">Code</button>
+                    <button class="tab-btn" data-tab="examples">Examples</button>
+                </div>
+
+                <!-- Visual Programming -->
+                <div id="visual-tab" class="tab-content active">
+                    <div class="instruction-builder">
+                        <h3>Add Instruction</h3>
+                        <select id="instruction-type">
+                            <optgroup label="Mode Control">
+                                <option value="set_mode">Set Mode</option>
+                                <option value="transition">Transition</option>
+                            </optgroup>
+                            <optgroup label="Classical">
+                                <option value="load">Load</option>
+                                <option value="store">Store</option>
+                                <option value="add">Add</option>
+                                <option value="mul">Multiply</option>
+                            </optgroup>
+                            <optgroup label="Quantum">
+                                <option value="hadamard">Hadamard Gate</option>
+                                <option value="cnot">CNOT Gate</option>
+                                <option value="measure">Measure</option>
+                            </optgroup>
+                            <optgroup label="Probabilistic">
+                                <option value="sample">Sample</option>
+                                <option value="expectation">Expectation</option>
+                            </optgroup>
+                            <optgroup label="Neural">
+                                <option value="forward">Forward</option>
+                            </optgroup>
+                            <optgroup label="Temporal">
+                                <option value="evolve">Evolve</option>
+                                <option value="checkpoint">Checkpoint</option>
+                                <option value="restore">Restore</option>
+                            </optgroup>
+                        </select>
+                        <input type="text" id="instruction-operands" placeholder="Operands (comma-separated)">
+                        <button id="add-instruction-btn">Add ➕</button>
+                    </div>
+
+                    <div class="program-list">
+                        <h3>Program</h3>
+                        <div id="program-instructions"></div>
+                    </div>
+
+                    <div class="memory-editor">
+                        <h3>Memory</h3>
+                        <div id="memory-values">
+                            <input type="text" id="mem-key" placeholder="Key">
+                            <input type="number" id="mem-value" placeholder="Value" step="0.1">
+                            <button id="add-memory-btn">Add Memory</button>
+                        </div>
+                        <div id="memory-list"></div>
+                    </div>
+                </div>
+
+                <!-- Code Editor -->
+                <div id="code-tab" class="tab-content">
+                    <textarea id="code-editor" rows="20"></textarea>
+                </div>
+
+                <!-- Examples -->
+                <div id="examples-tab" class="tab-content">
+                    <div id="examples-list"></div>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="controls">
+                    <button id="execute-btn" class="btn btn-primary">▶️ Execute</button>
+                    <button id="reset-btn" class="btn btn-secondary">🔄 Reset VM</button>
+                    <button id="clear-btn" class="btn btn-secondary">🗑️ Clear Program</button>
+                </div>
+            </div>
+
+            <!-- Middle Panel: Visualization -->
+            <div class="panel viz-panel">
+                <h2>📊 Field Visualization</h2>
+                
+                <div class="viz-tabs">
+                    <button class="viz-tab-btn active" data-viz="field">Field State</button>
+                    <button class="viz-tab-btn" data-viz="modes">Mode Amplitudes</button>
+                    <button class="viz-tab-btn" data-viz="energy">Energy/Entropy</button>
+                    <button class="viz-tab-btn" data-viz="evolution">Evolution</button>
+                </div>
+
+                <!-- Field State Visualization -->
+                <div id="field-viz" class="viz-content active">
+                    <canvas id="field-chart"></canvas>
+                </div>
+
+                <!-- Mode Amplitudes -->
+                <div id="modes-viz" class="viz-content">
+                    <canvas id="modes-chart"></canvas>
+                </div>
+
+                <!-- Energy/Entropy -->
+                <div id="energy-viz" class="viz-content">
+                    <canvas id="energy-chart"></canvas>
+                </div>
+
+                <!-- Evolution -->
+                <div id="evolution-viz" class="viz-content">
+                    <canvas id="evolution-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Right Panel: Status -->
+            <div class="panel status-panel">
+                <h2>⚡ VM Status</h2>
+                
+                <div class="status-card">
+                    <h3>Current State</h3>
+                    <div class="status-item">
+                        <span class="label">Mode:</span>
+                        <span id="status-mode" class="value mode-badge">unified</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Program Counter:</span>
+                        <span id="status-pc" class="value">0</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Time Elapsed:</span>
+                        <span id="status-time" class="value">0.00</span>
+                    </div>
+                </div>
+
+                <div class="status-card">
+                    <h3>Field Properties</h3>
+                    <div class="status-item">
+                        <span class="label">Energy:</span>
+                        <span id="status-energy" class="value">0.0000</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Entropy:</span>
+                        <span id="status-entropy" class="value">0.0000</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Measurements:</span>
+                        <span id="status-measurements" class="value">0</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="label">Entanglement:</span>
+                        <span id="status-entanglement" class="value">0</span>
+                    </div>
+                </div>
+
+                <div class="status-card">
+                    <h3>Registers</h3>
+                    <div id="registers-list" class="register-values"></div>
+                </div>
+
+                <div class="status-card">
+                    <h3>Measurements</h3>
+                    <div id="measurements-list" class="measurements"></div>
+                </div>
+
+                <div class="status-card">
+                    <h3>Execution Log</h3>
+                    <div id="execution-log" class="log"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

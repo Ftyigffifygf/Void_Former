@@ -1,0 +1,60 @@
+name: voidformer-small
+
+model:
+  vocab_size: 50257       # gpt2 / BPE size
+  d_model: 256
+  d_void: 256
+  n_layers: 4
+  n_heads: 8
+  d_ff: 1024
+  max_seq_len: 512
+  dropout: 0.1
+  void_noise_std: 0.05
+  coupling_init: 0.1
+  use_uncertainty_memory: true
+  use_dynamic_router: true
+  use_geodesic_tracker: true
+  geodesic_rank: 16
+  use_superposition_thinking: true
+  thinking_steps: 4
+  use_quantum_moe: true
+  num_experts: 4
+  top_k_experts: 2
+  use_quantum_token_embedder: true
+  collapse_temperature_init: 1.0
+  mode: adaptive-collapse
+
+tokenizer:
+  type: bpe
+  bpe_vocab_size: 50257
+
+dataset:
+  type: wikitext
+  hf_name: wikitext-2-raw-v1
+  block_size: 256
+  batch_size: 8
+
+training:
+  lr: 3.0e-4
+  weight_decay: 0.01
+  warmup_steps: 500
+  total_steps: 20000
+  grad_clip: 1.0
+  log_every: 50
+  ckpt_every: 2000
+  device: auto
+  seed: 1234
+  amp: true
+
+losses:
+  lambda_entropy_preservation: 0.05
+  lambda_semantic_consistency: 0.10
+  lambda_collapse_reg: 0.02
+  lambda_interference_stability: 0.01
+  lambda_ambiguity_retention: 0.05
+  lambda_geodesic: 0.02
+  geodesic_target: 1.5
+
+experiment:
+  output_dir: experiments/small
+  tensorboard: true
