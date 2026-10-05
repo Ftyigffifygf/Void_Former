@@ -1,4 +1,4 @@
-"""OpenAI-Compatible FastAPI Serving API for VoidFormer Models."""
+"""OpenAI-Compatible FastAPI Serving API for VoidFormer Models with Post-Quantum Security."""
 
 from __future__ import annotations
 
@@ -6,6 +6,7 @@ import argparse
 import time
 import os
 import yaml
+import base64
 import torch
 from typing import List, Dict, Any, Optional
 from pydantic import BaseModel, Field
@@ -15,13 +16,15 @@ from fastapi import FastAPI, HTTPException
 
 from voidformer.harness.model_factory import create_model
 from voidformer.utils.checkpoint import load_checkpoint
+from voidformer.security.pqc import KyberKEM
 
-app = FastAPI(title="VoidFormer OpenAI-Compatible API", version="0.1.0")
+app = FastAPI(title="VoidFormer Quantum-Safe OpenAI-Compatible API", version="0.1.0")
 
 # Global model state
 GLOBAL_MODEL: Optional[torch.nn.Module] = None
 GLOBAL_MODEL_NAME: str = "quantum-voidformer"
 GLOBAL_MAX_SEQ_LEN: int = 128
+GLOBAL_KYBER = KyberKEM()
 
 
 class ChatMessage(BaseModel):
@@ -35,6 +38,10 @@ class ChatCompletionRequest(BaseModel):
     max_tokens: int = Field(default=32, ge=1)
     temperature: float = Field(default=1.0, ge=0.0)
     top_p: Optional[float] = 1.0
+
+
+class PQCKeyExchangeRequest(BaseModel):
+    client_public_key_b64: str
 
 
 class ModelObject(BaseModel):
@@ -55,6 +62,21 @@ async def list_models() -> ModelListResponse:
     return ModelListResponse(data=[ModelObject(id=GLOBAL_MODEL_NAME)])
 
 
+@app.post("/v1/pqc/key_exchange")
+async def pqc_key_exchange(request: PQCKeyExchangeRequest) -> Dict[str, Any]:
+    """Perform CRYSTALS-Kyber Post-Quantum KEM key exchange."""
+    try:
+        client_pk = base64.b64decode(request.client_public_key_b64)
+        ciphertext, shared_secret = GLOBAL_KYBER.encapsulate(client_pk)
+        return {
+            "status": "success",
+            "ciphertext_b64": base64.b64encode(ciphertext).decode("utf-8"),
+            "shared_secret_hash_b64": base64.b64encode(shared_secret[:16]).decode("utf-8"),
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Kyber key exchange failed: {e}")
+
+
 @app.post("/v1/chat/completions")
 @app.post("/chat/completions")
 async def create_chat_completion(request: ChatCompletionRequest) -> Dict[str, Any]:
@@ -69,7 +91,6 @@ async def create_chat_completion(request: ChatCompletionRequest) -> Dict[str, An
     prompt_text += "assistant: "
 
     prompt_tokens = [ord(c) % 256 for c in prompt_text]
-    # Crop to max sequence length to prevent out-of-bounds error
     if len(prompt_tokens) > GLOBAL_MAX_SEQ_LEN:
         prompt_tokens = prompt_tokens[-GLOBAL_MAX_SEQ_LEN:]
 
