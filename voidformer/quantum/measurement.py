@@ -26,7 +26,6 @@ class ClassicalShadowsTomography:
         pauli_bases: (num_samples, n_qubits), values 0=X, 1=Y, 2=Z
         outcomes:    (num_samples, n_qubits), values 0 or 1
         """
-        expected = (pauli_bases.shape[0], self.n_qubits)
         if pauli_bases.dim() != 2 or pauli_bases.shape[1] != self.n_qubits:
             raise ValueError(
                 f"pauli_bases must have shape (num_samples, {self.n_qubits}), "
@@ -73,10 +72,12 @@ class ClassicalShadowsTomography:
 
             rho_hat_sum += snapshot
 
-        return rho_hat_sum / num_samples
+        rho_hat = rho_hat_sum / num_samples
+        return rho_hat
 
     def estimate_observable(
         self, rho_hat: torch.Tensor, observable: torch.Tensor
     ) -> float:
         """Estimate <O> = Tr(O rho_hat)."""
-        return torch.trace(torch.matmul(observable.to(rho_hat.dtype), rho_hat)).real.item()
+        exp_val = torch.trace(torch.matmul(observable.to(rho_hat.dtype), rho_hat)).real.item()
+        return exp_val
