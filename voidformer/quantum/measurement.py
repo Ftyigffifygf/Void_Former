@@ -1,13 +1,8 @@
-from __future__ import annotations
-
 """Classical Shadows State Tomography & Randomized Pauli Measurements."""
 
-import math
-import torch
-import numpy as np
-from typing import List, Tuple, Dict, Any, Optional
+from __future__ import annotations
 
-from voidformer.quantum.qubit_state import QuantumStateVector
+import torch
 
 
 class ClassicalShadowsTomography:
@@ -17,15 +12,32 @@ class ClassicalShadowsTomography:
         self.n_qubits = n_qubits
         self.num_shadow_samples = num_shadow_samples
 
-    def sample_random_pauli_bases(self, batch_size: int = 1) -> torch.Tensor:
-        return torch.randint(0, 3, (batch_size, self.num_shadow_samples, self.n_qubits))
+    def sample_random_pauli_bases(self) -> torch.Tensor:
+        """Return random Pauli bases (0=X, 1=Y, 2=Z), shape (num_shadow_samples, n_qubits)."""
+        return torch.randint(0, 3, (self.num_shadow_samples, self.n_qubits))
 
     def reconstruct_classical_shadow(
         self,
         pauli_bases: torch.Tensor,
         outcomes: torch.Tensor,
     ) -> torch.Tensor:
-        """Reconstruct approximate density matrix rho_hat from randomized Pauli measurement outcomes."""
+        """Reconstruct approximate density matrix rho_hat from randomized Pauli measurement outcomes.
+
+        pauli_bases: (num_samples, n_qubits), values 0=X, 1=Y, 2=Z
+        outcomes:    (num_samples, n_qubits), values 0 or 1
+        """
+        expected = (pauli_bases.shape[0], self.n_qubits)
+        if pauli_bases.dim() != 2 or pauli_bases.shape[1] != self.n_qubits:
+            raise ValueError(
+                f"pauli_bases must have shape (num_samples, {self.n_qubits}), "
+                f"got {tuple(pauli_bases.shape)}"
+            )
+        if outcomes.shape != pauli_bases.shape:
+            raise ValueError(
+                f"outcomes shape {tuple(outcomes.shape)} must match "
+                f"pauli_bases shape {tuple(pauli_bases.shape)}"
+            )
+
         num_samples = pauli_bases.shape[0]
         dim = 2 ** self.n_qubits
         dev = pauli_bases.device
@@ -55,16 +67,16 @@ class ClassicalShadowsTomography:
                 else:
                     proj = proj_z0 if s == 0 else proj_z1
 
+                # Single-qubit inverse channel: 3|psi><psi| - I
                 qubit_snap = 3.0 * proj - eye2
                 snapshot = torch.kron(snapshot, qubit_snap)
 
             rho_hat_sum += snapshot
 
-        rho_hat = rho_hat_sum / num_samples
-        return rho_hat
+        return rho_hat_sum / num_samples
 
     def estimate_observable(
         self, rho_hat: torch.Tensor, observable: torch.Tensor
     ) -> float:
-        exp_val = torch.trace(torch.matmul(observable.to(rho_hat.dtype), rho_hat)).real.item()
-        return exp_val
+        """Estimate <O> = Tr(O rho_hat)."""
+        return torch.trace(torch.matmul(observable.to(rho_hat.dtype), rho_hat)).real.item()
