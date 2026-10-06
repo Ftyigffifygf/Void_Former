@@ -1,5 +1,3 @@
-r"""Classical Shadows State Tomography & Randomized Pauli Measurements."""
-
 from __future__ import annotations
 
 import math
@@ -25,7 +23,7 @@ class ClassicalShadowsTomography:
         pauli_bases: torch.Tensor,
         outcomes: torch.Tensor,
     ) -> torch.Tensor:
-        r"""Reconstruct approximate density matrix rho_hat from randomized Pauli measurement outcomes."""
+        """Reconstruct approximate density matrix rho_hat from randomized Pauli measurement outcomes."""
         num_samples = pauli_bases.shape[0]
         dim = 2 ** self.n_qubits
         dev = pauli_bases.device
