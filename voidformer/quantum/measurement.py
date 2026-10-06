@@ -1,8 +1,6 @@
 """Classical Shadows State Tomography & Randomized Pauli Measurements."""
 
 from __future__ import annotations
-
-import math
 import torch
 import numpy as np
 from typing import List, Tuple, Dict, Any, Optional
