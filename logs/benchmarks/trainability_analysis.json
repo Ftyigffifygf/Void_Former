@@ -1,0 +1,34 @@
+[
+  {
+    "n_qubits": 2,
+    "n_layers": 1,
+    "init_strategy": "identity_near",
+    "mean_gradient_magnitude": 0.14339202642440796,
+    "gradient_variance": 0.10648293793201447,
+    "is_trainable": true
+  },
+  {
+    "n_qubits": 2,
+    "n_layers": 2,
+    "init_strategy": "identity_near",
+    "mean_gradient_magnitude": 0.16300523281097412,
+    "gradient_variance": 0.10884281247854233,
+    "is_trainable": true
+  },
+  {
+    "n_qubits": 4,
+    "n_layers": 1,
+    "init_strategy": "identity_near",
+    "mean_gradient_magnitude": 0.09543643891811371,
+    "gradient_variance": 0.03805425390601158,
+    "is_trainable": true
+  },
+  {
+    "n_qubits": 4,
+    "n_layers": 2,
+    "init_strategy": "identity_near",
+    "mean_gradient_magnitude": 0.0832691341638565,
+    "gradient_variance": 0.03702709823846817,
+    "is_trainable": true
+  }
+]

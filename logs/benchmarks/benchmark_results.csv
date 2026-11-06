@@ -1,0 +1,7 @@
+model,type,task,epochs,train_loss,val_loss,accuracy,training_time_sec
+Classical ANN,pure_classical,binary_classification,2,0.6807628348469734,0.6354957520961761,0.625,0.02919936180114746
+Quantum ANN,pennylane_qnn,binary_classification,2,0.7470551133155823,0.9098402261734009,0.125,0.6745474338531494
+Hybrid ANN,hybrid,binary_classification,2,0.7364671304821968,0.5557118952274323,0.875,0.6971473693847656
+Classical Transformer,pure_classical,sequence_modeling,2,1.2297040447592735,1.0634589195251465,0.6875,0.06525039672851562
+Hybrid Quantum Transformer,hybrid_quantum,sequence_modeling,2,1.8837952315807343,1.920239508152008,0.25,6.445929765701294
+Quantum-Native Prototype,variational_quantum,sequence_modeling,2,8.193548917770386,6.395080089569092,0.0625,1.6985652446746826

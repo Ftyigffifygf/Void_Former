@@ -1,0 +1,62 @@
+[
+  {
+    "model": "Classical ANN",
+    "type": "pure_classical",
+    "task": "binary_classification",
+    "epochs": 2,
+    "train_loss": 0.6807628348469734,
+    "val_loss": 0.6354957520961761,
+    "accuracy": 0.625,
+    "training_time_sec": 0.02919936180114746
+  },
+  {
+    "model": "Quantum ANN",
+    "type": "pennylane_qnn",
+    "task": "binary_classification",
+    "epochs": 2,
+    "train_loss": 0.7470551133155823,
+    "val_loss": 0.9098402261734009,
+    "accuracy": 0.125,
+    "training_time_sec": 0.6745474338531494
+  },
+  {
+    "model": "Hybrid ANN",
+    "type": "hybrid",
+    "task": "binary_classification",
+    "epochs": 2,
+    "train_loss": 0.7364671304821968,
+    "val_loss": 0.5557118952274323,
+    "accuracy": 0.875,
+    "training_time_sec": 0.6971473693847656
+  },
+  {
+    "model": "Classical Transformer",
+    "type": "pure_classical",
+    "task": "sequence_modeling",
+    "epochs": 2,
+    "train_loss": 1.2297040447592735,
+    "val_loss": 1.0634589195251465,
+    "accuracy": 0.6875,
+    "training_time_sec": 0.06525039672851562
+  },
+  {
+    "model": "Hybrid Quantum Transformer",
+    "type": "hybrid_quantum",
+    "task": "sequence_modeling",
+    "epochs": 2,
+    "train_loss": 1.8837952315807343,
+    "val_loss": 1.920239508152008,
+    "accuracy": 0.25,
+    "training_time_sec": 6.445929765701294
+  },
+  {
+    "model": "Quantum-Native Prototype",
+    "type": "variational_quantum",
+    "task": "sequence_modeling",
+    "epochs": 2,
+    "train_loss": 8.193548917770386,
+    "val_loss": 6.395080089569092,
+    "accuracy": 0.0625,
+    "training_time_sec": 1.6985652446746826
+  }
+]

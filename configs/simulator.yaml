@@ -1,0 +1,45 @@
+quantum:
+  backend: "lightning.qubit"
+  n_qubits: 4
+  n_layers: 2
+  encoding: "angle"
+  entanglement: "ring"
+  diff_method: "adjoint"
+  shots: null
+  noise_probability: 0.0
+  ansatz: "hardware_efficient"
+
+model:
+  model_type: "quantum_ann"
+  vocab_size: 32
+  d_model: 16
+  n_heads: 1
+  d_ff: 32
+  max_seq_len: 16
+  dropout: 0.0
+  num_layers: 1
+  task: "binary_classification"
+  num_classes: 2
+
+training:
+  batch_size: 8
+  learning_rate: 0.02
+  quantum_lr: 0.02
+  classical_lr: 0.02
+  epochs: 10
+  optimizer: "adam"
+  weight_decay: 0.0
+  seed: 42
+  grad_clip: 1.0
+  checkpoint_dir: "checkpoints"
+  log_dir: "logs"
+  device: "cpu"
+
+hardware:
+  ibm_token: null
+  ibm_instance: null
+  ibm_backend: "ibm_sherbrooke"
+  shots: 1024
+  max_circuits_per_job: 100
+  allow_hardware_execution: false
+  transpile_optimization_level: 1

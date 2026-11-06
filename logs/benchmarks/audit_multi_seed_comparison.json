@@ -1,0 +1,56 @@
+[
+  {
+    "model": "Classical ANN",
+    "task": "classification",
+    "parameters": 42,
+    "logical_qubits": 0,
+    "mean_final_loss": 0.6769,
+    "mean_accuracy": 0.4375,
+    "mean_time_sec": 0.028
+  },
+  {
+    "model": "Quantum ANN",
+    "task": "classification",
+    "parameters": 16,
+    "logical_qubits": 2,
+    "mean_final_loss": 0.7986,
+    "mean_accuracy": 0.1875,
+    "mean_time_sec": 0.69
+  },
+  {
+    "model": "Hybrid ANN",
+    "task": "classification",
+    "parameters": 54,
+    "logical_qubits": 2,
+    "mean_final_loss": 0.6915,
+    "mean_accuracy": 0.1875,
+    "mean_time_sec": 0.688
+  },
+  {
+    "model": "Classical Transformer",
+    "task": "sequence_modeling",
+    "parameters": 1008,
+    "logical_qubits": 0,
+    "mean_final_loss": 1.3102,
+    "mean_accuracy": 0.7188,
+    "mean_time_sec": 0.064
+  },
+  {
+    "model": "Hybrid Quantum Transformer",
+    "task": "sequence_modeling",
+    "parameters": 400,
+    "logical_qubits": 2,
+    "mean_final_loss": 1.7163,
+    "mean_accuracy": 0.625,
+    "mean_time_sec": 6.807
+  },
+  {
+    "model": "Quantum-Native Transformer",
+    "task": "sequence_modeling",
+    "parameters": 42,
+    "logical_qubits": 3,
+    "mean_final_loss": 6.0406,
+    "mean_accuracy": 0.25,
+    "mean_time_sec": 1.687
+  }
+]
