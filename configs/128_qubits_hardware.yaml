@@ -1,0 +1,48 @@
+# 128-Qubit Hardware Configuration for IBM Quantum QPUs
+# Physical 127-qubit / 133-qubit IBM Eagle / Heron QPUs (e.g., ibm_sherbrooke, ibm_kyiv)
+
+quantum:
+  backend: "qiskit.remote"
+  n_qubits: 128
+  n_layers: 2
+  encoding: "angle"
+  entanglement: "linear"
+  diff_method: "parameter-shift"
+  shots: 1024
+  noise_probability: 0.0
+  ansatz: "hardware_efficient"
+
+model:
+  model_type: "quantum_ann"
+  vocab_size: 32
+  d_model: 128
+  n_heads: 1
+  d_ff: 128
+  max_seq_len: 16
+  dropout: 0.0
+  num_layers: 1
+  task: "binary_classification"
+  num_classes: 2
+
+training:
+  batch_size: 2
+  learning_rate: 0.01
+  quantum_lr: 0.01
+  classical_lr: 0.01
+  epochs: 2
+  optimizer: "adam"
+  weight_decay: 0.0
+  seed: 42
+  grad_clip: 1.0
+  checkpoint_dir: "checkpoints"
+  log_dir: "logs"
+  device: "cpu"
+
+hardware:
+  ibm_token: null
+  ibm_instance: null
+  ibm_backend: "ibm_sherbrooke" # 127-qubit IBM Eagle processor
+  shots: 1024
+  max_circuits_per_job: 50
+  allow_hardware_execution: false
+  transpile_optimization_level: 1

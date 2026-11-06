@@ -11,7 +11,7 @@ from qai.core.tensor_utils import normalize_quantum_features
 
 
 class QuantumAttention(nn.Module):
-    """
+    r"""
     Quantum Attention Mechanism:
     Evaluates similarity between query and key states using a parameterized overlap circuit:
       |psi_theta(x)> = U_theta(x)|0>^{\otimes n}
@@ -52,8 +52,9 @@ class QuantumAttention(nn.Module):
         self.device = DeviceManager.create_device(backend_name, n_qubits=n_qubits, shots=shots)
 
         wires = list(range(n_qubits))
+        diff_method = "adjoint" if "lightning" in backend_name.lower() else "backprop"
 
-        @qml.qnode(self.device, interface="torch", diff_method="backprop")
+        @qml.qnode(self.device, interface="torch", diff_method=diff_method)
         def _overlap_circuit(q_feat: torch.Tensor, k_feat: torch.Tensor, weights: torch.Tensor):
             # Forward: Encode Query with interleaved trainable gates
             for i in range(n_qubits):

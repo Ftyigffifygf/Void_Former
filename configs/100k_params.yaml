@@ -1,0 +1,47 @@
+# 100k Parameter Configuration for Q-INTELLIGENCE
+
+quantum:
+  backend: "lightning.qubit"
+  n_qubits: 8
+  n_layers: 4
+  encoding: "angle"
+  entanglement: "ring"
+  diff_method: "adjoint"
+  shots: null
+  noise_probability: 0.0
+  ansatz: "hardware_efficient"
+
+model:
+  model_type: "hybrid_transformer"
+  vocab_size: 256
+  d_model: 128
+  n_heads: 4
+  d_ff: 384
+  max_seq_len: 32
+  dropout: 0.1
+  num_layers: 1
+  task: "sequence_modeling"
+  num_classes: 256
+
+training:
+  batch_size: 4
+  learning_rate: 0.005
+  quantum_lr: 0.01
+  classical_lr: 0.005
+  epochs: 5
+  optimizer: "adam"
+  weight_decay: 0.0001
+  seed: 42
+  grad_clip: 1.0
+  checkpoint_dir: "checkpoints"
+  log_dir: "logs"
+  device: "cpu"
+
+hardware:
+  ibm_token: null
+  ibm_instance: null
+  ibm_backend: "ibm_sherbrooke"
+  shots: 1024
+  max_circuits_per_job: 100
+  allow_hardware_execution: false
+  transpile_optimization_level: 1
