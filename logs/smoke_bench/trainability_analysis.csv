@@ -1,0 +1,5 @@
+n_qubits,n_layers,init_strategy,mean_gradient_magnitude,gradient_variance,is_trainable
+2,1,identity_near,0.0,0.0,False
+2,2,identity_near,0.0,0.0,False
+4,1,identity_near,0.0,0.0,False
+4,2,identity_near,0.0,0.0,False
