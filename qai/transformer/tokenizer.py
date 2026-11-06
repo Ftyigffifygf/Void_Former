@@ -1,7 +1,7 @@
 """Lightweight character and subword tokenizer for sequence modeling."""
 
 from __future__ import annotations
-from typing import List, Dict, Optional, Union
+from typing import List, Dict, Optional, Union, Sequence
 import torch
 
 

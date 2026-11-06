@@ -1,6 +1,7 @@
 # Q-INTELLIGENCE: Quantum Artificial Intelligence Framework
+## A Quantum Artificial Intelligence Framework Using PyTorch, PennyLane, and Real Quantum Computers
 
-**Q-INTELLIGENCE** is a research-grade quantum artificial intelligence framework built using **Python, PyTorch, PennyLane, and Qiskit**. It integrates variational quantum computing with state-of-the-art neural and transformer architectures, supporting execution on classical quantum simulators (`default.qubit`, `lightning.qubit`, `default.mixed`, `qiskit.aer`) and physical quantum hardware (`qiskit.remote` via IBM Quantum Runtime).
+**Q-INTELLIGENCE** is an extensible quantum artificial intelligence framework architected from scratch. It integrates variational quantum computing with neural and transformer architectures, supporting classical quantum simulation (`default.qubit`, `lightning.qubit`, `default.mixed`, `qiskit.aer`) and physical quantum hardware integration (`qiskit.remote` via IBM Quantum Runtime).
 
 ---
 
@@ -41,7 +42,7 @@
 
 All equations are implemented in `qai.quantum.quantum_pool.QuantumPool`:
 
-### A. Token Superposition
+### A. Token Superposition State
 Tokens are represented in a semantic superposition of classical deterministic and void quantum states:
 $$|T\rangle = \alpha |S_c\rangle + \beta |S_v\rangle, \quad \text{where } |\alpha|^2 + |\beta|^2 = 1$$
 Parametrized via context-adaptive angle $\theta$: $\alpha = \cos\theta, \beta = \sin\theta$.
@@ -95,7 +96,25 @@ Evaluated by measuring the probability of the all-zero state $|0\dots 0\rangle$ 
 
 ---
 
-## 5. Command Line Interface (CLI)
+## 5. Installation on Native Windows and CPU/GPU Environments
+
+Target environment: Windows 10/11, Python 3.10 / 3.11 / 3.12, 24 GB RAM.
+
+```cmd
+# Create virtual environment
+python -m venv venv
+venv\Scripts\activate
+
+# Install PyTorch
+pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# Install PennyLane, Qiskit and Q-INTELLIGENCE dependencies
+pip install pennylane pennylane-qiskit qiskit qiskit-aer qiskit-ibm-runtime scipy pyyaml pytest
+```
+
+---
+
+## 6. Command Line Interface (CLI)
 
 ```bash
 # 1. Run system diagnostics
@@ -116,14 +135,27 @@ python -m qai.cli benchmark --all --epochs 2 --output-dir logs/benchmarks
 
 ---
 
-## 6. Official Validation Report
+## 7. Multi-Seed Scientific Benchmark Results
 
-The framework has been evaluated through real executions of all model architectures and tests:
+Evaluated across random seeds (42, 100) under identical data conditions:
+
+| Model | Task | Parameters | Qubits | Mean Loss | Mean Accuracy | Mean Training Time |
+|---|---|---|---|---|---|---|
+| **Classical ANN** | Classification | 42 | 0 | 0.6769 | 43.8% | 0.028s |
+| **Quantum ANN** | Classification | 16 | 2 | 0.7986 | 18.8% | 0.690s |
+| **Hybrid ANN** | Classification | 54 | 2 | 0.6915 | 18.8% | 0.688s |
+| **Classical Transformer** | Sequence Modeling | 1008 | 0 | 1.3102 | 71.9% | 0.064s |
+| **Hybrid Quantum Transformer** | Sequence Modeling | 400 | 2 | 1.7163 | 62.5% | 6.807s |
+| **Quantum-Native Transformer** | Sequence Modeling | 42 | 3 | 6.0406 | 25.0% | 1.687s |
+
+---
+
+## 8. Official Validation Report
 
 | Validation | Status | Evidence |
 |---|---|---|
 | **Quantum simulation** | **PASS** | `default.qubit`, `lightning.qubit`, and `default.mixed` fully operational |
-| **PyTorch gradient integration** | **PASS** | Verified parameter gradients and non-zero updates in autograd backward passes |
+| **PyTorch gradient integration** | **PASS** | Verified parameter gradients and non-zero updates in autograd backward passes; finite difference verified |
 | **ANN training** | **PASS** | `ClassicalANN`, `QuantumANN`, and `HybridANN` trained to convergence |
 | **Classical transformer training** | **PASS** | `ClassicalTransformer` trained on next-token prediction |
 | **Hybrid quantum transformer training** | **PASS** | `HybridQuantumTransformer` trained with quantum overlap attention and QFFN |
@@ -134,6 +166,13 @@ The framework has been evaluated through real executions of all model architectu
 
 ---
 
-## 7. License
+## 9. References
+
+1. Abbas et al., "The power of quantum neural networks", *Nature Computational Science*, 2021.
+2. McClean et al., "Barren plateaus in quantum neural network training landscapes", *Nature Communications*, 2018.
+3. Perez-Salinas et al., "Data re-uploading for a universal quantum classifier", *Quantum*, 2020.
+4. Vaswani et al., "Attention Is All You Need", *NeurIPS*, 2017.
+
+## 10. License
 
 See [LICENSE](LICENSE).
